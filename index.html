@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AULA: interior design studio for homes, restaurants and offices</title>
+<meta name="description" content="AULA is an interior design studio: design projects, author supervision and furnishing for apartments, houses, restaurants and commercial spaces. Tell us about your project.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%232e2e2e'/%3E%3Cpath d='M7 25 16 6l9 19' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap">
+<style>
+/* ---------- Colours and sizes ---------- */
+:root { --main: #4d4d4d; --active: #b5b5b5; --dark: #2e2e2e; --pill: #d9d9d9; --head: 60px; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--head); -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: #fff; color: var(--main); font-family: "PT Sans", sans-serif; font-size: 16px; line-height: 1.45; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; }
+img { max-width: 100%; height: auto; }
+h1, h2, h3 { margin: 0; color: var(--main); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 10001; padding: 10px 14px; color: #fff; background: #000; }
+.skip:focus { top: 12px; }
+:focus-visible { outline: 2px solid var(--active); outline-offset: 3px; }
+.pill { display: inline-block; padding: 8px 20px; color: #000; background: var(--pill); border: 0; border-radius: 9999px; font: 14px "PT Sans", sans-serif; text-transform: lowercase; cursor: pointer; transition: background .3s ease-in-out, color .5s ease-in-out; }
+.pill:hover { background: #fff; color: #000; }
+
+/* ---------- Header ---------- */
+header { position: sticky; top: 0; z-index: 9999; height: var(--head); padding: 0 15px; color: #fff; background: var(--dark); }
+.hbar { display: flex; align-items: center; height: 100%; }
+.hbar .c1, .hbar .c3 { flex: 1 1 20%; display: flex; align-items: center; gap: 10px; }
+.hbar .c2 { flex: 0 0 100px; display: flex; justify-content: center; }
+.hbar .c3 { justify-content: flex-end; gap: 30px; }
+.burger { width: 35px; padding: 5px 0; background: none; border: 0; cursor: pointer; }
+.burger span { display: block; height: 2px; margin: 6px 0; background: #fff; border-radius: 2px; transition: transform .5s ease-in-out, opacity .5s linear; }
+.menu-open .burger span:nth-child(1) { transform: translate(0, 8px) rotate(45deg); }
+.menu-open .burger span:nth-child(2) { opacity: 0; }
+.menu-open .burger span:nth-child(3) { transform: translate(0, -8px) rotate(-45deg); }
+.slogan { margin-left: 10px; font: 14px Helvetica, Arial, sans-serif; letter-spacing: .15em; text-transform: uppercase; white-space: nowrap; }
+.about-btn { display: grid; place-items: center; width: 28px; height: 28px; margin-left: 6px; padding: 0; color: #fff; background: none; border: 0; cursor: pointer; transition: transform .5s linear; }
+.about-btn svg { width: 16px; height: 16px; }
+.about-open .about-btn { transform: rotate(90deg); }
+.logo { color: #fff; }
+.logo svg { width: 98px; height: 26px; }
+.phone { font-size: 16px; white-space: nowrap; }
+/* Side menu */
+.side { position: absolute; left: 0; top: var(--head); width: min(420px, 100vw); height: calc(100vh - var(--head)); padding: 20px 0; overflow-y: auto; background: var(--dark); transform: translateX(-100%); transition: transform .5s ease-in-out; }
+.menu-open .side { transform: none; }
+.side a, .side button { display: flex; align-items: center; width: 100%; padding: 10px 90px 10px 70px; color: #fff; background: none; border: 0; font: 18px "PT Sans", sans-serif; text-align: left; cursor: pointer; }
+.side a:hover, .side button:hover { background: #484848; }
+.side .caret::after { content: ""; margin-left: 10px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 7px solid; transition: transform .3s ease-in-out; }
+.side .caret[aria-expanded=true]::after { transform: scaleY(-1); }
+.sub { max-height: 0; overflow: hidden; transition: max-height .5s ease-in-out; }
+.sub.open { max-height: 300px; }
+.sub a { padding-left: 90px; font-size: 16px; color: #ddd; }
+/* About panel */
+.about { position: absolute; left: 0; right: 0; top: var(--head); padding: 40px max(15px, 6vw); color: #000; background: #fff; box-shadow: 0 20px 40px rgba(0, 0, 0, .25); transform: scaleX(0); transform-origin: left; transition: transform .5s ease-in-out; }
+.about-open .about { transform: scaleX(1); }
+.about h1 { margin: 0 0 20px; font-size: 40px; font-weight: 700; }
+.about p { max-width: 900px; margin: 0 0 15px; }
+.about a { text-decoration: underline; }
+.shade { position: fixed; inset: var(--head) 0 0; z-index: 9998; background: rgba(0, 0, 0, .7); opacity: 0; pointer-events: none; transition: opacity .4s; }
+.menu-open .shade, .about-open .shade { opacity: 1; pointer-events: auto; }
+
+/* ---------- Tiles ---------- */
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); }
+.tile { position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; aspect-ratio: 1; isolation: isolate; }
+.tile .bg { position: absolute; inset: 0; z-index: -1; background: #e3e3e3; transform: scale(1.1); transition: transform 1s; }
+.tile .bg img { width: 100%; height: 100%; object-fit: cover; }
+.tile .bg::after { content: ""; position: absolute; inset: 0; background: rgba(41, 41, 41, .7); transition: opacity 1s; }
+.tile .text { width: 100%; padding: 20px; text-align: center; color: #fff; transition: transform 1s; }
+.tile .text b { display: block; font-size: 20px; font-weight: 400; text-transform: lowercase; }
+.tile .text p { max-height: 0; margin: 20px auto 0; overflow: hidden; max-width: 260px; font-size: 13px; transition: max-height 1s; }
+.tile:hover .bg, .tile:focus-visible .bg { transform: scale(1.2); }
+.tile:hover .bg::after, .tile:focus-visible .bg::after { opacity: 0; }
+.tile:hover .text, .tile:focus-visible .text { transform: scale(1.2); }
+.tile:hover .text p, .tile:focus-visible .text p { max-height: 250px; }
+.tile:hover .text, .tile:focus-visible .text { text-shadow: 0 1px 12px rgba(0, 0, 0, .55); }
+
+/* ---------- Projects ---------- */
+.top h2 { margin: 0; padding: 20px 0; color: #fff; background: var(--dark); font-size: clamp(16px, 5vw, 40px); font-weight: 600; text-align: center; }
+.row { display: flex; }
+.row .img, .row .text { flex: 0 0 50%; }
+.row .img { position: relative; display: block; overflow: hidden; aspect-ratio: 1; background: #e3e3e3; cursor: zoom-in; }
+.row .img img { width: 100%; height: 100%; object-fit: cover; transition: transform .2s ease-in-out; }
+.row:nth-of-type(even) .img { order: 2; }
+.row .text { display: flex; align-items: center; padding: 100px; }
+.row .inner { width: 100%; }
+.path { display: inline-block; margin-bottom: 10px; padding: 5px 10px; color: #fff; background: var(--pc); font-size: 12px; text-transform: uppercase; }
+.props { font-size: 12px; text-transform: uppercase; color: var(--pc); }
+.row h3 { margin: 60px 0 10px; font-size: clamp(26px, 5vw, 40px); font-weight: 600; color: var(--pc); transition: color .2s ease-in-out; }
+.row:hover h3 { color: var(--active); }
+.row .inner > p { margin: 20px 0 0; }
+.coda { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 70px; }
+.coda ul { margin: 0; padding: 0; list-style: none; font-size: 14px; color: #606060; }
+.coda li::before { content: "/ "; }
+.more { padding: 0; color: var(--pc); background: none; border: 0; border-bottom: 1px solid var(--pc); font: 14px "PT Sans", sans-serif; cursor: pointer; }
+
+/* ---------- Request form (footer) ---------- */
+footer { color: #fff; background: var(--dark); }
+footer p, footer a { color: #fff; }
+.discuss { padding: 50px 5% 60px; border-bottom: 1px solid #fff; }
+.discuss h2 { margin: 0 auto 50px; color: #fff; font-size: 26px; font-weight: 400; text-align: center; }
+.discuss .grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 60px; padding: 0 5%; }
+.group { margin: 0 0 30px; padding: 0; border: 0; }
+.group legend { margin-bottom: 10px; padding: 0; font-size: 16px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; padding: 8px 20px; color: #fff; background: var(--dark); border: 1px solid #fff; border-radius: 9999px; font-size: 14px; text-transform: lowercase; white-space: nowrap; cursor: pointer; transition: background .3s, color .3s; }
+.chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chip:has(input:checked) { color: #000; background: #fff; }
+.chip:has(input:focus-visible) { outline: 2px solid var(--active); outline-offset: 2px; }
+.info { display: flex; flex-direction: column; }
+.info label { display: block; }
+.info input { width: 100%; margin: 5px 0; padding: 10px 0; color: #fff; background: transparent; border: 0; border-bottom: 1px solid #fff; border-radius: 0; font: 14px "PT Sans", sans-serif; outline: none; }
+.info input::placeholder { color: rgba(255, 255, 255, .75); }
+.info input:focus { border-bottom-color: var(--active); }
+.info .send { margin-top: 50px; }
+.info .pill { width: 100%; }
+.info .pill[disabled] { opacity: .6; cursor: progress; }
+.status { min-height: 1.3em; margin: 10px 0 0; font-size: 14px; color: #ddd; }
+.status.err { color: #ff9e8a; }
+.credit { margin: 6px 0 0; font-size: 12px; color: #aaa; }
+.credit a { color: #fff; border-bottom: 1px solid currentColor; }
+.thanks { display: none; padding: 30px 0; text-align: center; }
+.thanks strong { display: block; margin-bottom: 6px; font-size: 26px; font-weight: 400; }
+.is-sent > :not(.thanks) { display: none !important; }
+.is-sent > .thanks { display: block; animation: rise .5s ease both; }
+.contacts { display: flex; justify-content: space-between; gap: 30px; padding: 50px 5%; }
+.contacts p { margin: 0 0 4px; }
+.contacts .r { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
+.contacts .mark { width: 46px; height: 46px; margin-bottom: 30px; }
+.soc { display: flex; gap: 14px; }
+.copy { margin-top: 20px; }
+
+/* ---------- Call-back button and window ---------- */
+.call { position: fixed; right: 30px; bottom: 30px; z-index: 9990; display: grid; place-items: center; width: 62px; height: 62px; color: var(--dark); background: #fff; border: 0; border-radius: 50%; box-shadow: 0 4px 18px rgba(0, 0, 0, .35); cursor: pointer; }
+.call svg { width: 28px; height: 28px; }
+.call:hover { animation: ring 1s ease-in-out infinite; }
+@keyframes ring { 0%, 100% { transform: rotate(0); } 15% { transform: rotate(14deg); } 30% { transform: rotate(-12deg); } 45% { transform: rotate(9deg); } 60% { transform: rotate(-6deg); } 75% { transform: rotate(3deg); } }
+.cb { position: fixed; right: 30px; bottom: 110px; z-index: 9991; width: 260px; padding: 35px 30px 30px; color: #fff; background: var(--dark); box-shadow: 0 10px 40px rgba(0, 0, 0, .4); opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity .3s, transform .3s, visibility .3s; }
+.cb.open { opacity: 1; visibility: visible; transform: none; }
+.cb::after { content: ""; position: absolute; bottom: -12px; right: 20px; border-left: 24px solid transparent; border-top: 12px solid var(--dark); }
+.cb .main-phone { display: block; font-size: 22px; }
+.cb .main-phone:hover { color: var(--active); }
+.cb .pill { width: 100%; margin: 10px 0 20px; font-size: 16px; text-align: center; }
+.cb .or { margin: 0 0 6px; font-size: 22px; }
+.cb input { width: 100%; padding: 10px 0; color: #fff; background: var(--dark); border: 1px solid #5f5f5f; border-radius: 2px; font: 16px "PT Sans", sans-serif; text-align: center; }
+.cb form .pill { margin: 10px 0 0; }
+.cb .x { position: absolute; top: 8px; right: 10px; padding: 4px; color: #aaa; background: none; border: 0; font-size: 20px; line-height: 1; cursor: pointer; }
+.cb .thanks { padding: 10px 0 0; }
+.cb .thanks strong { font-size: 20px; }
+
+/* ---------- Image viewer ---------- */
+dialog { max-width: min(92vw, 1100px); max-height: 92vh; padding: 0; border: 0; background: transparent; }
+dialog::backdrop { background: rgba(0, 0, 0, .85); }
+dialog img { max-height: 88vh; width: auto; }
+dialog button { position: absolute; top: 6px; right: 6px; width: 40px; height: 40px; color: #fff; background: rgba(0, 0, 0, .5); border: 0; border-radius: 50%; font-size: 22px; cursor: pointer; }
+
+.js .rv { opacity: 0; transform: translateY(40px); transition: opacity .9s ease, transform 1s cubic-bezier(.2, .7, .2, 1); }
+.js .rv.in { opacity: 1; transform: none; }
+@keyframes rise { from { opacity: 0; transform: translateY(12px); } }
+
+@media (max-width: 1100px) {
+  .row .text { padding: 50px; }
+  .discuss .grid { grid-template-columns: 1fr; gap: 20px; padding: 0; }
+}
+@media (max-width: 768px) {
+  .slogan, .hbar .c3 .phone { display: none; }
+  .hbar .c3 { gap: 12px; }
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .tile .text b { font-size: 18px; }
+  .row { flex-direction: column; }
+  .row .img { order: 0 !important; }
+  .row .text { padding: 36px 20px 50px; }
+  .row h3 { margin-top: 30px; }
+  .coda { margin-top: 36px; }
+  .contacts { flex-direction: column; }
+  .contacts .r { align-items: flex-start; text-align: left; }
+  .side a, .side button { padding: 12px 30px; }
+  .sub a { padding-left: 50px; }
+  .call { right: 10px; bottom: 10px; width: 52px; height: 52px; }
+  .cb { right: 10px; bottom: 80px; }
+}
+@media (max-width: 420px) { .hbar .c3 .pill { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .tile .bg, .tile .text, .tile .text p, .tile .bg::after, .side, .about, .row .img img { transition: none; }
+  .js .rv { opacity: 1; transform: none; transition: none; }
+  .call:hover { animation: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#projects">Skip to projects</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="wordmark" viewBox="0 0 98 26"><path d="M2 24 12 2l10 22M30 2v13a8 8 0 0 0 16 0V2M54 2v22h12M70 24 80 2l10 22" fill="none" stroke="currentColor" stroke-width="2.2"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></symbol>
+</svg>
+
+<header>
+  <div class="hbar">
+    <div class="c1">
+      <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="side" data-burger><span></span><span></span><span></span></button>
+      <span class="slogan">Interior design studio</span>
+      <button class="about-btn" type="button" aria-label="About the studio" aria-expanded="false" aria-controls="about" data-about-btn><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2v12M2 8h12"/></svg></button>
+    </div>
+    <div class="c2"><a class="logo" href="#top" aria-label="AULA, home"><svg aria-hidden="true"><use href="#wordmark"/></svg></a></div>
+    <div class="c3">
+      <a class="pill" href="#contact">discuss a project</a>
+      <a class="phone" href="tel:+15550170433">+1 (555) 017-04-33</a>
+    </div>
+  </div>
+  <nav class="side" id="side" aria-label="Main" inert>
+    <a href="#about" data-open-about>About</a>
+    <button class="caret" type="button" aria-expanded="false" aria-controls="sub-projects" data-sub>Projects</button>
+    <div class="sub" id="sub-projects"><a href="#projects">Apartments</a><a href="#projects">Houses</a><a href="#projects">Restaurants</a><a href="#projects">Commercial spaces</a></div>
+    <a href="#contact" data-pick="design project">Services</a>
+    <a href="#contact">Pricing</a>
+    <a href="#contact" data-pick="furnishing">Furnishing</a>
+    <a href="#contact">Contacts</a>
+  </nav>
+  <section class="about" id="about" aria-label="About the studio" inert>
+    <h1>AULA, an interior design studio</h1>
+    <p>We design apartments, houses, restaurants and commercial spaces, and we stay with the project until the last lamp is hung: design project, author supervision on site, and furnishing with real suppliers.</p>
+    <p>Our interiors are calm, warm and built to last: natural materials, deliberate light and storage that disappears. Every project starts with a conversation about how you live or work. <a href="#contact">Tell us about yours</a>.</p>
+  </section>
+</header>
+<div class="shade" data-shade></div>
+
+<main id="top">
+  <nav class="tiles" aria-label="Sections">
+    <a class="tile" href="#about" data-open-about><span class="bg"><img src="img/t1.webp" width="720" height="720" alt=""></span><span class="text"><b>about us</b><p>A small studio with a big archive: twelve years of homes, restaurants and offices.</p></span></a>
+    <a class="tile" href="#projects"><span class="bg"><img src="img/t2.webp" width="720" height="720" alt=""></span><span class="text"><b>projects</b><p>Apartments, houses, restaurants and commercial spaces, from 40 to 600 m².</p></span></a>
+    <a class="tile" href="#contact" data-pick="design project"><span class="bg"><img src="img/t3.webp" width="720" height="720" alt=""></span><span class="text"><b>services</b><p>Design project, author supervision, furnishing, or the whole thing turnkey.</p></span></a>
+    <a class="tile" href="#contact"><span class="bg"><img src="img/t4.webp" width="720" height="720" alt=""></span><span class="text"><b>pricing</b><p>A fixed price per square metre, agreed before we draw a line.</p></span></a>
+    <a class="tile" href="#projects"><span class="bg"><img src="img/t5.webp" width="720" height="720" alt=""></span><span class="text"><b>awards</b><p>Our work has been shortlisted in national interior awards.</p></span></a>
+    <a class="tile" href="#projects"><span class="bg"><img src="img/t6.webp" width="720" height="720" alt=""></span><span class="text"><b>press</b><p>Projects featured in design magazines and architecture blogs.</p></span></a>
+    <a class="tile" href="#contact" data-pick="furnishing"><span class="bg"><img src="img/t7.webp" width="720" height="720" alt=""></span><span class="text"><b>furnishing</b><p>Furniture, lighting and textiles chosen, ordered and placed by us.</p></span></a>
+    <a class="tile" href="#contact"><span class="bg"><img src="img/t8.webp" width="720" height="720" alt=""></span><span class="text"><b>contacts</b><p>Visit the studio or book a call. We reply the same day.</p></span></a>
+  </nav>
+
+  <section class="top" id="projects" aria-labelledby="projects-title">
+    <h2 id="projects-title">Latest projects</h2>
+    <article class="row" style="--pc:#b7ac85">
+      <a class="img" href="img/p1.webp" data-view><img src="img/p1.webp" width="1200" height="1200" alt="Penthouse lounge with a curved sofa, an olive tree and oak slat walls" loading="lazy"></a>
+      <div class="text"><div class="inner">
+        <span class="path">Projects / Apartments</span>
+        <div class="props">460 m² • Harbor district • 2026</div>
+        <h3>Harbor</h3>
+        <p>A penthouse for a client who wanted quiet after the speed of the city: a private space for living, slow evenings at home and meeting friends.</p>
+        <div class="coda"><ul><li>design</li><li>author supervision</li><li>furnishing</li></ul><button class="more" type="button" data-view-img="img/p1.webp" data-alt="Harbor penthouse">view</button></div>
+      </div></div>
+    </article>
+    <article class="row" style="--pc:#d3b573">
+      <a class="img" href="img/p2.webp" data-view><img src="img/p2.webp" width="1200" height="1200" alt="Restaurant with plaster arches, a terrazzo floor and boucle chairs" loading="lazy"></a>
+      <div class="text"><div class="inner">
+        <span class="path">Projects / Restaurants</span>
+        <div class="props">240 m² • Old town • 2026</div>
+        <h3>ORO</h3>
+        <p>A new look at a familiar place: soft vaults, warm stone and low light, so that every corner feels calm, deep and present.</p>
+        <div class="coda"><ul><li>design</li><li>author supervision</li><li>furnishing</li></ul><button class="more" type="button" data-view-img="img/p2.webp" data-alt="ORO restaurant">view</button></div>
+      </div></div>
+    </article>
+    <article class="row" style="--pc:#c28faf">
+      <a class="img" href="img/p3.webp" data-view><img src="img/p3.webp" width="1200" height="1200" alt="Blush pink salon lounge with a long curved white sofa and arched mirrors" loading="lazy"></a>
+      <div class="text"><div class="inner">
+        <span class="path">Projects / Commercial spaces</span>
+        <div class="props">480 m² • City centre</div>
+        <h3>BLOOM</h3>
+        <p>A bold, eclectic salon that catches the eye at first glance, without forgetting ergonomics: as comfortable for the people who work there every day as for their guests.</p>
+        <div class="coda"><ul><li>design</li><li>author supervision</li><li>furnishing</li></ul><button class="more" type="button" data-view-img="img/p3.webp" data-alt="BLOOM salon">view</button></div>
+      </div></div>
+    </article>
+    <article class="row" style="--pc:#2c3d2f">
+      <a class="img" href="img/p4.webp" data-view><img src="img/p4.webp" width="1200" height="1200" alt="Forest green kitchen with a walnut island and a linear pendant on copper rods" loading="lazy"></a>
+      <div class="text"><div class="inner">
+        <span class="path">Projects / Apartments</span>
+        <div class="props">80 m² • Riverside</div>
+        <h3>FERN</h3>
+        <p>A compact apartment built around one strong idea: a deep green kitchen as the heart of the home. Every metre works, and the result is more than the client imagined.</p>
+        <div class="coda"><ul><li>design</li><li>author supervision</li><li>furnishing</li></ul><button class="more" type="button" data-view-img="img/p4.webp" data-alt="FERN apartment">view</button></div>
+      </div></div>
+    </article>
+    <article class="row" style="--pc:#c1ac90">
+      <a class="img" href="img/p5.webp" data-view><img src="img/p5.webp" width="1200" height="1200" alt="Warm beige living room with arched wall panels and a curved cream sofa" loading="lazy"></a>
+      <div class="text"><div class="inner">
+        <span class="path">Projects / Houses</span>
+        <div class="props">120 m² • Linden park</div>
+        <h3>LINEN HOUSE</h3>
+        <p>Minimal in the details, warm in tone, with natural light from tall windows. Nothing extra: just space that settles into your rhythm.</p>
+        <div class="coda"><ul><li>design</li><li>furnishing</li></ul><button class="more" type="button" data-view-img="img/p5.webp" data-alt="Linen House">view</button></div>
+      </div></div>
+    </article>
+  </section>
+</main>
+
+<footer>
+  <section class="discuss" id="contact" aria-labelledby="discuss-title">
+    <h2 id="discuss-title">Let's create a premium space for living, work and business.<br>Tell us about your project</h2>
+    <!-- Formgong form. Replace fk_your_access_key with the access key from your Formgong dashboard (two forms on this page). -->
+    <form class="grid" id="f-project" action="https://formgong.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="fk_your_access_key">
+      <input type="hidden" name="request" value="Project">
+      <div class="sr" aria-hidden="true"><label>Leave this field empty<input name="botcheck" tabindex="-1" autocomplete="off"></label></div>
+      <div>
+        <fieldset class="group"><legend>Type of space:</legend><div class="chips">
+          <label class="chip"><input type="radio" name="space" value="apartment">apartment</label>
+          <label class="chip"><input type="radio" name="space" value="house">house</label>
+          <label class="chip"><input type="radio" name="space" value="restaurant">restaurant</label>
+          <label class="chip"><input type="radio" name="space" value="commercial space">commercial space</label>
+        </div></fieldset>
+        <fieldset class="group"><legend>Area:</legend><div class="chips">
+          <label class="chip"><input type="radio" name="area" value="40–60 m²">40–60 m²</label>
+          <label class="chip"><input type="radio" name="area" value="60–100 m²">60–100 m²</label>
+          <label class="chip"><input type="radio" name="area" value="100–200 m²">100–200 m²</label>
+          <label class="chip"><input type="radio" name="area" value="200+ m²">200+ m²</label>
+        </div></fieldset>
+        <fieldset class="group"><legend>Services:</legend><div class="chips">
+          <label class="chip"><input type="checkbox" name="services" value="design project">design project</label>
+          <label class="chip"><input type="checkbox" name="services" value="author supervision">author supervision</label>
+          <label class="chip"><input type="checkbox" name="services" value="furnishing">furnishing</label>
+          <label class="chip"><input type="checkbox" name="services" value="turnkey">turnkey</label>
+          <label class="chip"><input type="checkbox" name="services" value="need a consultation">need a consultation</label>
+        </div></fieldset>
+      </div>
+      <div class="info">
+        <label><span class="sr">Name</span><input name="name" autocomplete="name" placeholder="Name" required></label>
+        <label><span class="sr">Phone</span><input type="tel" name="phone" autocomplete="tel" placeholder="Phone" required></label>
+        <label><span class="sr">Email</span><input type="email" name="email" autocomplete="email" placeholder="Email"></label>
+        <div class="send"><button class="pill" type="submit">send request</button></div>
+        <p class="status" data-status role="status" aria-live="polite"></p>
+        <p class="credit">Powered by <a href="https://formgong.com" rel="noopener">Formgong</a></p>
+      </div>
+      <div class="thanks" tabindex="-1"><strong>Thank you, <span data-name>there</span>.</strong>We will call you back within one working day to talk about your project.</div>
+    </form>
+  </section>
+  <div class="contacts">
+    <div>
+      <p><strong>AULA STUDIO</strong></p>
+      <p>14 Gallery Lane, studio 2</p>
+      <p>Old town</p>
+      <p style="margin-top:20px"><a href="tel:+15550170433">+1 (555) 017-04-33</a></p>
+      <p><a href="mailto:hello@aula.example">hello@aula.example</a></p>
+    </div>
+    <div class="r">
+      <svg class="mark" viewBox="0 0 46 46" aria-hidden="true"><circle cx="23" cy="23" r="21" fill="none" stroke="#fff" stroke-width="1.6"/><path d="M14 33 23 13l9 20" fill="none" stroke="#fff" stroke-width="1.8"/></svg>
+      <div class="soc"><a href="#">facebook</a><a href="#">behance</a><a href="#">instagram</a><a href="#">pinterest</a></div>
+      <p class="copy">© 2016–<span data-year>2026</span> AULA interior design studio. A fictional studio: names, places and projects are examples.</p>
+    </div>
+  </div>
+</footer>
+
+<button class="call" type="button" aria-label="Call or ask for a call back" aria-expanded="false" aria-controls="cb" data-call><svg aria-hidden="true"><use href="#i-phone"/></svg></button>
+<div class="cb" id="cb" role="dialog" aria-label="Call us">
+  <button class="x" type="button" aria-label="Close" data-cb-close>×</button>
+  <a class="main-phone" href="tel:+15550170433">+1 (555) 017-04-33</a>
+  <a class="pill" href="tel:+15550170433">call</a>
+  <p class="or">or we'll call you</p>
+  <form id="f-call" action="https://formgong.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="fk_your_access_key">
+    <input type="hidden" name="request" value="Call back">
+    <div class="sr" aria-hidden="true"><label>Leave this field empty<input name="botcheck" tabindex="-1" autocomplete="off"></label></div>
+    <label><span class="sr">Your phone</span><input type="tel" name="phone" autocomplete="tel" placeholder="your phone" required></label>
+    <button class="pill" type="submit">call me back</button>
+    <p class="status" data-status role="status" aria-live="polite"></p>
+    <p class="credit">Powered by <a href="https://formgong.com" rel="noopener">Formgong</a></p>
+    <div class="thanks" tabindex="-1"><strong>Thank you.</strong>We will call you within the hour during working time.</div>
+  </form>
+</div>
+
+<dialog id="viewer" aria-label="Project photo"><img alt=""><button type="button" aria-label="Close" data-viewer-close>×</button></dialog>
+
+<script>
+(function () {
+  var body = document.body, root = document.documentElement;
+  var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  root.classList.add("js");
+  document.querySelectorAll("[data-year]").forEach(function (n) { n.textContent = new Date().getFullYear(); });
+
+  // Side menu and the "about" panel: one open at a time, the shade or Escape closes both.
+  var burger = document.querySelector("[data-burger]"), side = document.getElementById("side");
+  var aboutBtn = document.querySelector("[data-about-btn]"), about = document.getElementById("about");
+  function setMenu(open) { body.classList.toggle("menu-open", open); burger.setAttribute("aria-expanded", String(open)); side.inert = !open; }
+  function setAbout(open) { body.classList.toggle("about-open", open); aboutBtn.setAttribute("aria-expanded", String(open)); about.inert = !open; }
+  burger.addEventListener("click", function () { setAbout(false); setMenu(!body.classList.contains("menu-open")); });
+  aboutBtn.addEventListener("click", function () { setMenu(false); setAbout(!body.classList.contains("about-open")); });
+  document.querySelector("[data-shade]").addEventListener("click", function () { setMenu(false); setAbout(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { setMenu(false); setAbout(false); closeCb(); } });
+  document.querySelectorAll("[data-open-about]").forEach(function (a) { a.addEventListener("click", function (e) { e.preventDefault(); setMenu(false); setAbout(true); window.scrollTo({ top: 0, behavior: still ? "auto" : "smooth" }); }); });
+  side.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", function () { if (!a.hasAttribute("data-open-about")) setMenu(false); }); });
+  document.querySelectorAll("[data-sub]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var sub = document.getElementById(b.getAttribute("aria-controls")), open = b.getAttribute("aria-expanded") !== "true";
+      b.setAttribute("aria-expanded", String(open)); sub.classList.toggle("open", open);
+    });
+  });
+
+  // "services" and "furnishing" links tick the matching service in the request form.
+  document.querySelectorAll("[data-pick]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var box = document.querySelector('#f-project input[name="services"][value="' + a.dataset.pick + '"]');
+      if (box) box.checked = true;
+    });
+  });
+
+  // Call-back window from the round phone button.
+  var call = document.querySelector("[data-call]"), cb = document.getElementById("cb");
+  function closeCb() { cb.classList.remove("open"); call.setAttribute("aria-expanded", "false"); }
+  call.addEventListener("click", function () { var open = !cb.classList.contains("open"); cb.classList.toggle("open", open); call.setAttribute("aria-expanded", String(open)); if (open) cb.querySelector("input[type=tel]").focus(); });
+  document.querySelector("[data-cb-close]").addEventListener("click", closeCb);
+
+  // Project photos open large.
+  var viewer = document.getElementById("viewer"), vimg = viewer.querySelector("img");
+  function view(src, alt) { vimg.src = src; vimg.alt = alt || ""; viewer.showModal(); }
+  document.querySelectorAll("[data-view]").forEach(function (a) { a.addEventListener("click", function (e) { e.preventDefault(); var img = a.querySelector("img"); view(a.getAttribute("href"), img.alt); }); });
+  document.querySelectorAll("[data-view-img]").forEach(function (b) { b.addEventListener("click", function () { view(b.dataset.viewImg, b.dataset.alt); }); });
+  viewer.querySelector("[data-viewer-close]").addEventListener("click", function () { viewer.close(); });
+  viewer.addEventListener("click", function (e) { if (e.target === viewer) viewer.close(); });
+
+  // Project rows fade up as they scroll in.
+  if (!still && "IntersectionObserver" in window) {
+    var seen = new IntersectionObserver(function (entries) { entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); seen.unobserve(e.target); } }); }, { rootMargin: "0px 0px -10% 0px" });
+    document.querySelectorAll(".row .inner, .discuss h2, .discuss .grid").forEach(function (el) { el.classList.add("rv"); seen.observe(el); });
+  }
+
+  // Forms: send to Formgong; thanks only when the answer is success: true.
+  document.querySelectorAll("form[action*='formgong']").forEach(function (form) {
+    var button = form.querySelector('button[type="submit"]'), status = form.querySelector("[data-status]"), label = button.textContent;
+    function say(text, bad) { status.textContent = text; status.classList.toggle("err", !!bad); }
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      button.disabled = true; button.textContent = "sending…"; say("");
+      var nameField = form.elements.namedItem("name"), first = nameField ? nameField.value.trim().split(/\s+/)[0] : "";
+      fetch(form.action, { method: "POST", headers: { Accept: "application/json" }, body: new FormData(form) })
+        .then(function (res) { return res.json().catch(function () { return null; }); })
+        .then(function (result) {
+          if (result && result.success === true) {
+            form.querySelectorAll("[data-name]").forEach(function (n) { n.textContent = first || "there"; });
+            form.reset();
+            form.classList.add("is-sent");
+            form.querySelector(".thanks").focus();
+          } else {
+            say((result && result.message) || "Could not send. Please try again.", true);
+          }
+        })
+        .catch(function () { say("Could not send. Check your connection and try again.", true); })
+        .then(function () { button.disabled = false; button.textContent = label; });
+    });
+  });
+})();
+</script>
+</body>
+</html>
